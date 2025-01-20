@@ -1,12 +1,6 @@
-"use client";
+import { useEffect, useState } from "react";
 
-import Image from "next/image";
-import { useState, useEffect } from "react";
-// import { Home } from "@/components/Home";
-
-import { MovieContainer } from "@/components/MovieContainer";
-
-export default function Home() {
+export const HomePage = () => {
   type MovieType = {
     adult: boolean;
     backdrop_path: string;
@@ -24,7 +18,7 @@ export default function Home() {
     vote_count: number;
   };
 
-  const [movies, setMovies] = useState<MovieType[] | undefined>();
+  const [movie, setMovie] = useState<MovieType | undefined>();
   const token =
     "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjYjNiODAxYjg3OTUwYjIwNDVmZTYyMWRhYmIwZTM4NSIsIm5iZiI6MTczNzM0MjQxOC4zNTY5OTk5LCJzdWIiOiI2NzhkYmRkMmU0NTY2Mzk5YTI2ZTFhNDUiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.UuFD5MVGbzMmPxLaCvddS3hvK3vlqx581Vo9YUQdEkM";
   const getMovie = async () => {
@@ -39,18 +33,21 @@ export default function Home() {
     );
     const data = await response.json();
     if (data?.results) {
-      setMovies(data.results[2]);
+      setMovie(data.results[0]);
     }
   };
   useEffect(() => {
     getMovie();
     console.log("getting movie");
   }, []);
-  console.log(movies);
-
+  console.log({ movie });
   return (
     <div>
-      <MovieContainer movieInfo={movies} />
+      <p>{movie?.original_title}</p>
+      <img
+        src={"https://image.tmdb.org/t/p/original/" + movie?.poster_path}
+        alt=""
+      />
     </div>
   );
-}
+};
