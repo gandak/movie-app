@@ -17,4 +17,8 @@ body {
   display: flex;
   margin: auto;
   justify-content: center;
+  padding-top: 50px;
+  padding-left: 80px;
+  padding-right: 80px;
+  max-width: 1438px;
 }

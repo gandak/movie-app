@@ -1,0 +1,4 @@
+export const TOKEN =
+  "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjYjNiODAxYjg3OTUwYjIwNDVmZTYyMWRhYmIwZTM4NSIsIm5iZiI6MTczNzM0MjQxOC4zNTY5OTk5LCJzdWIiOiI2NzhkYmRkMmU0NTY2Mzk5YTI2ZTFhNDUiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.UuFD5MVGbzMmPxLaCvddS3hvK3vlqx581Vo9YUQdEkM";
+
+export const popularMovies = "/movie/popular?language=en-US&page=1";

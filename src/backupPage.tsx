@@ -1,6 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+// import { Home } from "@/components/Home";
 
-export const HomePage = () => {
+import { PopularMovies } from "@/app/_components/PopularMovies";
+
+export default function Home() {
   type MovieType = {
     adult: boolean;
     backdrop_path: string;
@@ -18,7 +21,7 @@ export const HomePage = () => {
     vote_count: number;
   };
 
-  const [movie, setMovie] = useState<MovieType | undefined>();
+  const [movies, setMovies] = useState<MovieType[] | undefined>();
   const token =
     "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjYjNiODAxYjg3OTUwYjIwNDVmZTYyMWRhYmIwZTM4NSIsIm5iZiI6MTczNzM0MjQxOC4zNTY5OTk5LCJzdWIiOiI2NzhkYmRkMmU0NTY2Mzk5YTI2ZTFhNDUiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.UuFD5MVGbzMmPxLaCvddS3hvK3vlqx581Vo9YUQdEkM";
   const getMovie = async () => {
@@ -33,21 +36,18 @@ export const HomePage = () => {
     );
     const data = await response.json();
     if (data?.results) {
-      setMovie(data.results[0]);
+      setMovies(data.results[2]);
     }
   };
   useEffect(() => {
     getMovie();
     console.log("getting movie");
   }, []);
-  console.log({ movie });
+  console.log(movies);
+
   return (
     <div>
-      <p>{movie?.original_title}</p>
-      <img
-        src={"https://image.tmdb.org/t/p/original/" + movie?.poster_path}
-        alt=""
-      />
+      <PopularMovies movieInfo={movies} />
     </div>
   );
-};
+}
