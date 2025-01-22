@@ -2,10 +2,12 @@ import PopularMovies from "@/app/_components/PopularMovies";
 import UpcomingMovies from "./_components/UpcomingMovies";
 import TopRatedMovies from "./_components/TopRatedMovies";
 import NowPlayingMovies from "./_components/NowPlayingMovies";
+import { Header } from "./_components/Header";
 
 export default async function Home() {
   return (
     <div className="flex flex-col justify-center items-center">
+      <Header />
       <div className="w-screen h-[600px]">
         <NowPlayingMovies />
       </div>
