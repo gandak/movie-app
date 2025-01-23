@@ -16,31 +16,9 @@ import { useState, useEffect } from "react";
 export function ModeToggle() {
   const { theme, setTheme } = useTheme();
 
-  //   const [mounted, setMounted] = useState(false);
-
-  //   useEffect(() => {
-  //     setMounted(true);
-  //   }, []);
-
-  //   if (!mounted) {
-  //     return null;
-  //   }
-
   const changeTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
   };
-
-  //   const [themeMode, setThemeMode] = useState("light");
-
-  //   const changeTheme = () => {
-  //     if (themeMode === "light") {
-  //       setThemeMode("dark");
-  //       setTheme("dark");
-  //     } else {
-  //       setThemeMode("light");
-  //       setTheme("light");
-  //     }
-  //   };
 
   return (
     <Button variant="outline" size="icon" onClick={() => changeTheme()}>

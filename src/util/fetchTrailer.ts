@@ -12,8 +12,5 @@ export async function fetchTrailer(endpoint: number) {
   );
 
   const dataTrailer = await response.json();
-
-  console.log(dataTrailer);
-
   return dataTrailer;
 }
