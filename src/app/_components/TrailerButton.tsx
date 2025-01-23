@@ -13,7 +13,6 @@ import { fetchTrailer } from "@/util/fetchTrailer";
 export async function TrailerButton(id: number) {
   const dataTrailer = await fetchTrailer(id.id);
   const videoTrailerURL = `https://www.youtube.com/embed/${dataTrailer?.results[0].key}`;
-  console.log(videoTrailerURL);
 
   return (
     <Dialog>

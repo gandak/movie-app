@@ -30,7 +30,7 @@ export async function Genres() {
         </div>
         <hr className="border-[1px] border-[#E4E4E7]" />
         <div className="flex flex-wrap gap-4 ">
-          {genres.genres.map((genre: GenreType) => {
+          {genres.genres.map((genre: GenreType, index: number) => {
             return (
               <Button
                 variant="outline"
