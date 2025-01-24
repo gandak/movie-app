@@ -1,6 +1,7 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Header } from "./_components/Header";
 
 const geistInter = Inter({
   variable: "--font-inter-sans",
@@ -23,6 +24,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          {/* <Header /> */}
           {children}
         </ThemeProvider>
       </body>

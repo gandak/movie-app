@@ -15,7 +15,9 @@ export default async function TopRatedMovies() {
       </div>
       <div className="flex flex-wrap gap-8 justify-center">
         {data.results?.slice(0, 10).map((movie: MovieType) => {
-          return <MovieGenerator movieInfo={movie} />;
+          return (
+            <MovieGenerator movieInfo={movie} className="w-[230px] h-[439px]" />
+          );
         })}
       </div>
     </div>

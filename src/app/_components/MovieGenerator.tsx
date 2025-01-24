@@ -9,16 +9,29 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 
-export const MovieGenerator = ({ movieInfo }: { movieInfo: MovieType }) => {
+export const MovieGenerator = ({
+  movieInfo,
+  className,
+}: {
+  movieInfo: MovieType;
+  className: string;
+}) => {
   return (
     <Link href={`/movies/${movieInfo.id}`}>
-      <Card className="w-[230px] h-[430px] flex flex-col items-center  rounded-lg overflow-hidden">
+      <Card
+        className={cn(
+          ` flex flex-col items-center  rounded-lg overflow-hidden`,
+          className
+        )}
+      >
         <Image
           src={`https://image.tmdb.org/t/p/original/${movieInfo?.poster_path}`}
-          width={230}
-          height={340}
+          width={300}
+          height={400}
           alt=""
+          // style={{ width: "100%", height: "100%" }}
         />
         <CardContent>
           <div className="flex gap-2 justify-center items-center pt-1">

@@ -10,9 +10,11 @@ import { TOKEN } from "@/util/constants";
 import { GenreType } from "@/util/types";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { fetchData } from "@/util/fetchData";
+import Link from "next/link";
 
 export async function Genres() {
   const genres = await fetchData("/genre/movie/list?language=en");
+  console.log(genres);
 
   return (
     <Popover>
@@ -32,13 +34,15 @@ export async function Genres() {
         <div className="flex flex-wrap gap-4 ">
           {genres.genres.map((genre: GenreType, index: number) => {
             return (
-              <Button
-                variant="outline"
-                className="h-[20px] pl-[10px]  py-[2px] pr-[4px] rounded-lg"
-              >
-                <p className="text-xs font-bold ">{genre.name}</p>
-                <ChevronRight />
-              </Button>
+              <Link href={`/movies/genres/${genre.id}`}>
+                <Button
+                  variant="outline"
+                  className="h-[20px] pl-[10px]  py-[2px] pr-[4px] rounded-lg"
+                >
+                  <p className="text-xs font-bold ">{genre.name}</p>
+                  <ChevronRight />
+                </Button>
+              </Link>
             );
           })}
         </div>

@@ -9,9 +9,10 @@ import {
 import { Button } from "@/components/ui/button";
 import { Play } from "lucide-react";
 import { fetchTrailer } from "@/util/fetchTrailer";
+import { MovieId } from "@/util/types";
 
-export async function TrailerButton(id: number) {
-  const dataTrailer = await fetchTrailer(id.id);
+export async function TrailerButton(movieId: MovieId) {
+  const dataTrailer = await fetchTrailer(movieId.id);
   const videoTrailerURL = `https://www.youtube.com/embed/${dataTrailer?.results[0].key}`;
 
   return (

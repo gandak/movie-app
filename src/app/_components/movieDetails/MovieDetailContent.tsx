@@ -11,6 +11,7 @@ import {
 } from "@/util/types";
 import Image from "next/image";
 import { MovieGenerator } from "../MovieGenerator";
+import { TrailerButton } from "../TrailerButton";
 
 export default async function MovieDetailContent(movieIdParam: MovieId) {
   const movieId = movieIdParam.id;
@@ -23,27 +24,44 @@ export default async function MovieDetailContent(movieIdParam: MovieId) {
   console.log(moreLikeThis);
   const selectedMovieURL = await fetchTrailer(Number(movieId));
 
+  console.log(selectedMovieURL);
+
+  const bgImgUrl = `https://image.tmdb.org/t/p/original/${selectedMovie?.backdrop_path}`;
+
   // const genres = await fetchData("/genre/movie/list?language=en");
 
   return (
-    <div>
+    <div className="max-w-[1068px] w-full flex flex-col gap-6">
       <div className="flex justify-between">
         <div className="flex flex-col">
-          <h1>{selectedMovie.original_title}</h1>
-          <div className="flex">
-            <p>{selectedMovie.release_date}</p> ·{" "}
-            <p>{!selectedMovie.adult ? "PG" : "R"}</p> ·{" "}
+          <h1 className="text-[36px] font-bold">
+            {selectedMovie.original_title}
+          </h1>
+          <div className="flex gap-1 text-[18px]">
+            <p>{selectedMovie.release_date}</p> <p>·</p>
+            <p>{!selectedMovie.adult ? "PG" : "R"}</p> ·
             <p>
               {Math.floor(selectedMovie.runtime / 60)}h{" "}
               {Math.floor(selectedMovie.runtime % 60)}m
             </p>
           </div>
         </div>
-        <div>
-          <span>⭐</span>
-          <p>{selectedMovie.vote_average.toFixed(1)}</p>
-          <p>/10</p>
-          <p>{selectedMovie.popularity.toFixed()}</p>
+        <div className="">
+          <p className="text-[12px] font-semibold">Rating</p>
+          <div className="flex">
+            <img src="/star2.svg" alt="" />
+            <div>
+              <div className="flex items-center">
+                <p className="text-[18px] font-semibold">
+                  {selectedMovie.vote_average.toFixed(1)}
+                </p>
+                <p className="text-[#71717A]">/10</p>
+              </div>
+              <p className="text-[#71717A] text-[12px]">
+                {selectedMovie.popularity.toFixed()}
+              </p>
+            </div>
+          </div>
         </div>
       </div>
       <div>
@@ -51,23 +69,21 @@ export default async function MovieDetailContent(movieIdParam: MovieId) {
           <Image
             src={`https://image.tmdb.org/t/p/original/${selectedMovie.poster_path}`}
             alt=""
-            width={200}
-            height={350}
+            width={290}
+            height={428}
           />
-          <div>
-            <iframe
-              width="560"
-              height="315"
-              src={`https://www.youtube.com/embed/${selectedMovieURL.results[0]?.key}`}
-              title="YouTube video player"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              allowFullScreen
-            ></iframe>
+          <div
+            className="w-[760px] h-[428px] bg-cover bg-center flex relative"
+            style={{
+              backgroundImage: bgImgUrl ? `url(${bgImgUrl})` : undefined,
+            }}
+          >
+            <div className="absolute bottom-5 left-5">
+              <TrailerButton id={Number(movieId)} />
+            </div>
           </div>
         </div>
-        <div>
+        <div className="pt-6 flex flex-col gap-6">
           <div className="flex gap-4">
             {selectedMovie.genres.map((genre: GenreType) => {
               return (
@@ -80,53 +96,77 @@ export default async function MovieDetailContent(movieIdParam: MovieId) {
           <p>{selectedMovie.overview}</p>
         </div>
       </div>
-      <div>
-        <div className="flex gap-6">
-          <p>Director:</p>
-          <div>
-            {casts.crew
-              .filter(
-                (array: CrewType) => array.known_for_department === "Directing"
-              )
-              ?.map((crew: CrewType) => {
-                return <p>{crew.name}</p>;
-              })
-              .slice(0, 3)}
+      <div className="flex flex-col gap-5">
+        <div>
+          <div className="flex gap-6 pb-2">
+            <p className="font-bold w-[64px]">Director</p>
+            <div className="flex gap-6">
+              {casts.crew
+                .filter(
+                  (array: CrewType) =>
+                    array.known_for_department === "Directing"
+                )
+                ?.map((crew: CrewType, index: number) => {
+                  if (index == 0) return <p>{crew.name}</p>;
+                  else return <p>{crew.name}</p>;
+                })
+                .slice(0, 3)}
+            </div>
           </div>
+
+          <hr />
         </div>
-        <hr />
-        <div className="flex gap-6">
-          <p>Writers</p>
-          <div className="">
-            {casts.crew
-              .filter(
-                (array: CrewType) => array.known_for_department === "Writing"
-              )
-              ?.map((crew: CrewType) => {
-                return <p>{crew.name}</p>;
-              })
-              .slice(0, 3)}
+
+        <div>
+          <div className="flex gap-6 pb-2">
+            <p className="font-bold w-[64px]">Writers</p>
+            <div className="flex gap-6">
+              {casts.crew
+                .filter(
+                  (array: CrewType) => array.known_for_department === "Writing"
+                )
+                ?.map((crew: CrewType, index: number) => {
+                  if (index == 0) return <p>{crew.name}</p>;
+                  else return <p>{crew.name}</p>;
+                })
+                .slice(0, 3)}
+            </div>
           </div>
+
+          <hr />
         </div>
-        <hr />
-        <div className="flex gap-6">
-          <p>Stars</p>
-          <div>
-            {casts.cast
-              ?.map((star: CastType) => {
-                return <p>{star.name}</p>;
-              })
-              .slice(0, 5)}
+
+        <div>
+          <div className="flex gap-6 pb-2">
+            <p className="font-bold w-[64px]">Stars</p>
+            <div className="flex gap-2">
+              {casts.cast
+                ?.map((star: CastType, index: number) => {
+                  if (index == 0) return <p>{star.name}</p>;
+                  else
+                    return (
+                      <p className="">
+                        {" · "} {star.name}
+                      </p>
+                    );
+                })
+                .slice(0, 5)}
+            </div>
           </div>
+          <hr />
         </div>
       </div>
-      <div className="flex flex-col">
-        <p>More like this</p>
-        <div className="flex gap-4">
+
+      <div className="flex flex-col max-w-[1068px] gap-8">
+        <p className="text-[24px] font-semibold">More like this</p>
+        <div className="flex gap-8 w-full">
           {moreLikeThis.results.slice(0, 5).map((movie: MovieType) => {
             return (
               <div>
-                <MovieGenerator movieInfo={movie} />
+                <MovieGenerator
+                  movieInfo={movie}
+                  className="w-[190px] h-[372px]"
+                />
               </div>
             );
           })}

@@ -9,7 +9,9 @@ export default function MovieDetailPage({
   return (
     <div>
       <Header />
-      <MovieDetailContent id={movieDetail} />
+      <div className="flex justify-center">
+        <MovieDetailContent id={movieDetail} />
+      </div>
     </div>
   );
 }
