@@ -1,7 +1,4 @@
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { fetchData } from "@/util/fetchData";
-import { fetchTrailer } from "@/util/fetchTrailer";
 import {
   CastType,
   CrewType,
@@ -21,14 +18,7 @@ export default async function MovieDetailContent(movieIdParam: MovieId) {
     `/movie/${movieId}/similar?language=en-US&page=1`
   );
 
-  // console.log(moreLikeThis);
-  const selectedMovieURL = await fetchTrailer(Number(movieId));
-
-  // console.log(selectedMovie);
-
   const bgImgUrl = `https://image.tmdb.org/t/p/original/${selectedMovie?.backdrop_path}`;
-
-  // const genres = await fetchData("/genre/movie/list?language=en");
 
   return (
     <div className="max-w-[1068px] w-full flex flex-col gap-6">
@@ -79,7 +69,7 @@ export default async function MovieDetailContent(movieIdParam: MovieId) {
             }}
           >
             <div className="absolute bottom-5 left-5">
-              <TrailerButton id={Number(movieId)} />
+              <TrailerButton id={movieId} />
             </div>
           </div>
         </div>

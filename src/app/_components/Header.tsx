@@ -1,7 +1,7 @@
 import { ModeToggle } from "@/components/ui/themeModeChanger";
-import { Input } from "@/components/ui/input";
+
 import { Genres } from "./Genres";
-import { SearchIcon } from "lucide-react";
+import SearchInput from "./SearchInput";
 
 export const Header = () => {
   return (
@@ -13,21 +13,20 @@ export const Header = () => {
 
         <div className="flex gap-3">
           <Genres />
-          <div className="relative w-[355px]">
-            <div className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground">
-              <SearchIcon className="h-4 w-4" />
-            </div>
-            <Input
-              id="search"
-              type="search"
-              placeholder="Search..."
-              className="w-full rounded-lg bg-background pl-8"
-            />
-          </div>
+          <SearchInput /> {/* Client-side search input */}
         </div>
 
         <ModeToggle />
       </div>
+      {/* {searchedResults.length > 0 && (
+        <div className="mt-4">
+          <ul>
+            {searchedResults.map((movie) => (
+              <li key={movie.id}>{movie.title}</li>
+            ))}
+          </ul>
+        </div>
+      )} */}
     </div>
   );
 };
