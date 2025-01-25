@@ -6,12 +6,10 @@ export default function MovieDetailPage({
 }: {
   params: { movieDetail: string };
 }) {
+  console.log(movieDetail);
   return (
-    <div>
-      <Header />
-      <div className="flex justify-center">
-        <MovieDetailContent id={movieDetail} />
-      </div>
+    <div className="flex justify-center">
+      <MovieDetailContent id={movieDetail} />
     </div>
   );
 }

@@ -21,10 +21,10 @@ export default async function MovieDetailContent(movieIdParam: MovieId) {
     `/movie/${movieId}/similar?language=en-US&page=1`
   );
 
-  console.log(moreLikeThis);
+  // console.log(moreLikeThis);
   const selectedMovieURL = await fetchTrailer(Number(movieId));
 
-  console.log(selectedMovieURL);
+  // console.log(selectedMovie);
 
   const bgImgUrl = `https://image.tmdb.org/t/p/original/${selectedMovie?.backdrop_path}`;
 

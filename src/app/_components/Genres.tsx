@@ -1,12 +1,9 @@
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { TOKEN } from "@/util/constants";
 import { GenreType } from "@/util/types";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { fetchData } from "@/util/fetchData";
@@ -14,7 +11,6 @@ import Link from "next/link";
 
 export async function Genres() {
   const genres = await fetchData("/genre/movie/list?language=en");
-  console.log(genres);
 
   return (
     <Popover>
@@ -33,8 +29,9 @@ export async function Genres() {
         <hr className="border-[1px] border-[#E4E4E7]" />
         <div className="flex flex-wrap gap-4 ">
           {genres.genres.map((genre: GenreType, index: number) => {
+            const movieGenres = genre.id;
             return (
-              <Link href={`/movies/genres/${genre.id}`}>
+              <Link href={`/movies/genres/${JSON.stringify(movieGenres)}`}>
                 <Button
                   variant="outline"
                   className="h-[20px] pl-[10px]  py-[2px] pr-[4px] rounded-lg"

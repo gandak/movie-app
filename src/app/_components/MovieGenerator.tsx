@@ -12,9 +12,11 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 
 export const MovieGenerator = ({
+  index,
   movieInfo,
   className,
 }: {
+  index: number;
   movieInfo: MovieType;
   className: string;
 }) => {

@@ -2,6 +2,7 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Header } from "./_components/Header";
+import { Footer } from "./_components/Footer";
 
 const geistInter = Inter({
   variable: "--font-inter-sans",
@@ -16,7 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistInter.variable} ${geistInter.variable} antialiased`}
+        className={`${geistInter.variable} ${geistInter.variable} antialiased flex flex-col `}
       >
         <ThemeProvider
           attribute="class"
@@ -24,8 +25,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {/* <Header /> */}
+          <Header />
           {children}
+          <Footer />
         </ThemeProvider>
       </body>
     </html>
