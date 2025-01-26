@@ -37,16 +37,16 @@ export default function GenreDetailContent({
 
           setMovies(movies.results || []);
         } catch (error) {
-          console.error("Error fetching all movies:", error);
+          console.error("Error", error);
           setMovies([]);
         }
         return;
       }
 
       try {
-        const selectetGenreIds = filterGenres.join(",");
+        const selectedGenreIds = filterGenres.join(",");
         const moviesData = await fetchData(
-          `/discover/movie?language=en&with_genres=${selectetGenreIds}`
+          `/discover/movie?language=en&with_genres=${selectedGenreIds}`
         );
         setMovies(moviesData.results);
       } catch (error) {

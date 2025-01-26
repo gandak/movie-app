@@ -26,7 +26,7 @@ const SearchInput = () => {
       );
       setSearchResults(searchData.results || []);
     } catch (error) {
-      console.error("Error fetching movies:", error);
+      console.error("Error", error);
     }
   };
 
@@ -98,7 +98,3 @@ const SearchInput = () => {
 };
 
 export default SearchInput;
-
-{
-  /* <p>{movie.original_title}</p>; */
-}
