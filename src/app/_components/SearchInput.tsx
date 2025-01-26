@@ -40,7 +40,7 @@ const SearchInput = () => {
         type="search"
         placeholder="Search..."
         value={searchValue}
-        onChange={searchHandler} // Handle search on client-side
+        onChange={searchHandler}
         className="w-full rounded-lg bg-background pl-8"
       />
 
