@@ -11,7 +11,9 @@ export default async function PopularMovies() {
     <div>
       <div className="flex flex-wrap justify-between pb-8">
         <h1 className="font-bold text-[24px]">Popular</h1>
-        <a href="">See more →</a>
+        <a href="/movies/category/popular" className="hover:underline">
+          See more →
+        </a>
       </div>
       <div className="flex flex-wrap gap-8 justify-center">
         {data.results?.slice(0, 10).map((movie: MovieType) => {

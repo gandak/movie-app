@@ -9,6 +9,8 @@ import {
 import Image from "next/image";
 import { MovieGenerator } from "../MovieGenerator";
 import { TrailerButton } from "../TrailerButton";
+import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 export default async function MovieDetailContent(movieIdParam: MovieId) {
   const movieId = movieIdParam.id;
@@ -148,7 +150,18 @@ export default async function MovieDetailContent(movieIdParam: MovieId) {
       </div>
 
       <div className="flex flex-col max-w-[1068px] gap-8">
-        <p className="text-[24px] font-semibold">More like this</p>
+        <div className="flex justify-between items-center">
+          <p className="text-[24px] font-semibold">More like this</p>
+          <Link
+            href={`/movies/category/${movieId}/similar`}
+            className="hover:underline"
+          >
+            <div className="flex items-center">
+              <p>See more</p> <ArrowRight className="w-4" />
+            </div>
+          </Link>
+        </div>
+
         <div className="flex gap-8 w-full">
           {moreLikeThis.results.slice(0, 5).map((movie: MovieType) => {
             return (

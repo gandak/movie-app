@@ -11,7 +11,9 @@ export default async function TopRatedMovies() {
     <div>
       <div className="flex flex-wrap justify-between pb-8">
         <h1 className="font-bold text-[24px]">Top Rated</h1>
-        <a href="">See more →</a>
+        <a href="/movies/category/toprated" className="hover:underline">
+          See more →
+        </a>
       </div>
       <div className="flex flex-wrap gap-8 justify-center">
         {data.results?.slice(0, 10).map((movie: MovieType) => {

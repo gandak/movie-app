@@ -29,7 +29,7 @@ const SearchInput = () => {
       console.error("Error fetching movies:", error);
     }
   };
-  console.log(searchResults);
+
   return (
     <div className="relative w-[355px]">
       <div className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground">
