@@ -1,65 +1,57 @@
 "use client";
-import { GenreType } from "@/util/types";
+import { GenreType, MovieType } from "@/util/types";
 import { ChevronRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import { fetchData } from "@/util/fetchData";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { MovieGenerator } from "../MovieGenerator";
+import MoviePagination from "../MoviePagination";
+import { useSearchParams } from "next/navigation";
 
 export default function GenreDetailContent({
   defaultMovieGenres,
 }: {
   defaultMovieGenres: string;
 }) {
+  const searchParams = useSearchParams();
   const [genres, setGenres] = useState<GenreType[]>([]);
-  const [movies, setMovies] = useState<any[]>([]);
+  const [movies, setMovies] = useState<any>(null);
   const [filterGenres, SetFilterGenres] = useState<string[]>([
     defaultMovieGenres,
   ]);
 
+  const page = Number(searchParams.get("page") || "1");
+
   useEffect(() => {
     const getAllGenres = async () => {
-      try {
-        const genres = await fetchData("/genre/movie/list?language=en");
-        setGenres(genres.genres);
-      } catch (error) {
-        console.error("Error", error);
-      }
+      const genres = await fetchData("/genre/movie/list?language=en");
+      setGenres(genres.genres);
     };
     getAllGenres();
   }, []);
 
   useEffect(() => {
     const getMoviesData = async () => {
-      if (filterGenres.length === 0) {
-        try {
-          const movies = await fetchData(`/discover/movie`);
+      let apiUrl = `/discover/movie?language=en&page=${page}`;
 
-          setMovies(movies.results || []);
-        } catch (error) {
-          console.error("Error", error);
-          setMovies([]);
-        }
-        return;
-      }
-
-      try {
+      if (filterGenres.length > 0) {
         const selectedGenreIds = filterGenres.join(",");
-        const moviesData = await fetchData(
-          `/discover/movie?language=en&with_genres=${selectedGenreIds}`
-        );
-        setMovies(moviesData.results);
-      } catch (error) {
-        console.error("Error", error);
+        apiUrl = apiUrl + `&with_genres=${selectedGenreIds}`;
       }
+      const moviesData = await fetchData(apiUrl);
+      setMovies(moviesData);
     };
 
     getMoviesData();
-  }, [filterGenres]);
+  }, [filterGenres, page]);
 
   const handleToggleGroupChange = (selectedGenres: string[]) => {
     SetFilterGenres(selectedGenres);
   };
+
+  if (!movies) {
+    return null;
+  }
 
   return (
     <div className="flex flex-col gap-6 w-full max-w-[1280px] m-auto">
@@ -75,7 +67,7 @@ export default function GenreDetailContent({
             type="multiple"
             value={filterGenres}
             onValueChange={handleToggleGroupChange}
-            className="flex flex-wrap gap-4"
+            className="flex flex-wrap gap-4 justify-start"
           >
             {genres.map((genre: GenreType) => (
               <ToggleGroupItem
@@ -95,10 +87,10 @@ export default function GenreDetailContent({
 
         <div className="flex flex-col w-[70%] gap-8">
           <h3 className="text-[20px] font-semibold">
-            {`${movies.length} titles`}
+            {`${movies?.total_results} titles`}
           </h3>
           <div className="grid grid-cols-4 gap-8">
-            {movies.map((movie, index: number) => (
+            {movies?.results.map((movie: MovieType, index: number) => (
               <MovieGenerator
                 index={index}
                 movieInfo={movie}
@@ -106,6 +98,10 @@ export default function GenreDetailContent({
               />
             ))}
           </div>
+          <MoviePagination
+            currentPage={Number(page)}
+            totalPages={movies.total_pages}
+          />
         </div>
       </div>
     </div>

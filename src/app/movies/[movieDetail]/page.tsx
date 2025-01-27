@@ -1,4 +1,3 @@
-import { Header } from "@/app/_components/Header";
 import MovieDetailContent from "@/app/_components/movieDetails/MovieDetailContent";
 
 export default function MovieDetailPage({

@@ -24,7 +24,7 @@ export const MovieGenerator = ({
     <Link href={`/movies/${movieInfo.id}`}>
       <Card
         className={cn(
-          ` flex flex-col items-center  rounded-lg overflow-hidden`,
+          ` flex flex-col items-center rounded-lg overflow-hidden bg-[#F4F4F5]`,
           className
         )}
       >
@@ -36,7 +36,7 @@ export const MovieGenerator = ({
           // style={{ width: "100%", height: "100%" }}
         />
         <CardContent>
-          <div className="flex gap-2 justify-center items-center pt-1">
+          <div className="flex gap-2 justify-center items-center pt-1 ">
             <span>⭐</span>
             <div className="flex items-center">
               <p className="font-bold">{movieInfo?.vote_average.toFixed(1)}</p>

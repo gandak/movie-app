@@ -20,14 +20,10 @@ const SearchInput = () => {
       return;
     }
 
-    try {
-      const searchData = await fetchData(
-        `/search/movie?query=${search}&language=en-US`
-      );
-      setSearchResults(searchData.results || []);
-    } catch (error) {
-      console.error("Error", error);
-    }
+    const searchData = await fetchData(
+      `/search/movie?query=${search}&language=en-US`
+    );
+    setSearchResults(searchData.results || []);
   };
 
   const clickHandler = () => {
@@ -50,7 +46,7 @@ const SearchInput = () => {
       />
 
       {searchResults.length > 0 ? (
-        <div className="absolute mt-4 z-10 bg-white p-8 flex flex-col gap-[10px] w-[553px] ">
+        <div className="absolute mt-4 z-10 bg-white p-8 flex flex-col gap-[10px] w-[553px] drop-shadow-xl rounded-xl">
           {searchResults?.slice(0, 5).map((movie: MovieType) => (
             <div className="flex flex-col gap-3">
               <Link
@@ -92,7 +88,12 @@ const SearchInput = () => {
               <hr className="border-b-2" />
             </div>
           ))}
-          <div>See all results for "{searchValue}"</div>
+          <Link
+            href={`/movies/searchValue/${searchValue}`}
+            onClick={() => clickHandler()}
+          >
+            <div>See all results for "{searchValue}"</div>
+          </Link>
         </div>
       ) : searchValue.length > 1 && searchResults.length == 0 ? (
         <div className="absolute mt-4 z-10 bg-white p-8">
