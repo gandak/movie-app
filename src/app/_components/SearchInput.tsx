@@ -22,12 +22,17 @@ const SearchInput = () => {
 
     try {
       const searchData = await fetchData(
-        `/search/movie?query=${e.target.value.toLowerCase()}&language=en-US`
+        `/search/movie?query=${search}&language=en-US`
       );
       setSearchResults(searchData.results || []);
     } catch (error) {
       console.error("Error", error);
     }
+  };
+
+  const clickHandler = () => {
+    setSearchResults([]);
+    setSearchValue("");
   };
 
   return (
@@ -48,7 +53,10 @@ const SearchInput = () => {
         <div className="absolute mt-4 z-10 bg-white p-8 flex flex-col gap-[10px] w-[553px] ">
           {searchResults?.slice(0, 5).map((movie: MovieType) => (
             <div className="flex flex-col gap-3">
-              <Link href={`/movies/${movie?.id}`}>
+              <Link
+                href={`/movies/${movie?.id}`}
+                onClick={() => clickHandler()}
+              >
                 <div className="flex gap-4 w-full h-[110px] p-2 items-center hover:bg-[#f5f5f5] rounded-lg overflow-hidden">
                   <Image
                     src={`https://image.tmdb.org/t/p/original/${movie?.poster_path}`}

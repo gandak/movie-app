@@ -12,6 +12,7 @@ import { fetchTrailer } from "@/util/fetchTrailer";
 import { MovieId } from "@/util/types";
 
 export async function TrailerButton(movieId: MovieId) {
+  
   const dataTrailer = await fetchTrailer(movieId.id);
   const videoTrailerURL = `https://www.youtube.com/embed/${dataTrailer?.results[0].key}`;
 

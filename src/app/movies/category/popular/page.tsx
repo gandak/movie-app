@@ -1,4 +1,7 @@
 import { MovieGenerator } from "@/app/_components/MovieGenerator";
+import MoviePagination from "@/app/_components/MoviePagination";
+import SearchBar from "@/app/dashboard/search-bar";
+import { Pagination } from "@/components/ui/pagination";
 import { fetchData } from "@/util/fetchData";
 
 export default async function PopularMoviesPage() {
@@ -13,6 +16,9 @@ export default async function PopularMoviesPage() {
             <MovieGenerator movieInfo={movie} className="w-[230px] h-[439px]" />
           );
         })}
+      </div>
+      <div>
+        <MoviePagination movieInfo={movies} />
       </div>
     </div>
   );
