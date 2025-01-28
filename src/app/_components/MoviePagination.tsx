@@ -34,6 +34,7 @@ export default function MoviePagination({
             />
           </PaginationItem>
         )}
+
         {currentPage > 1 && (
           <PaginationItem>
             <PaginationLink href="#" onClick={() => goToPage(currentPage - 1)}>
@@ -55,9 +56,10 @@ export default function MoviePagination({
             </PaginationLink>
           </PaginationItem>
         )}
+
         {currentPage == 1 && totalPages > 1 && (
           <PaginationItem>
-            <PaginationLink href="#" onClick={() => goToPage(currentPage - 1)}>
+            <PaginationLink href="#" onClick={() => goToPage(currentPage + 2)}>
               {currentPage + 2}
             </PaginationLink>
           </PaginationItem>

@@ -9,12 +9,9 @@ import { ChevronRight } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-export default function MovieSearchPage({
-  params,
-}: {
-  params: { searchValue: string };
-}) {
+export default function MovieSearchPage() {
   const searchParams = useSearchParams();
+
   const [searchValue, setSearchValue] = useState("");
   const [movies, setMovies] = useState<any>([]);
   const [filteredMovies, setFilteredMovies] = useState<any>({ results: [] });
@@ -22,6 +19,10 @@ export default function MovieSearchPage({
   const [filterGenres, SetFilterGenres] = useState<string[]>([]);
 
   const page = Number(searchParams.get("page") || "1");
+
+  // useEffect(() => {
+  //   setSearchValue(getSearchValue);
+  // }, [getSearchValue]);
 
   useEffect(() => {
     const getAllGenres = async () => {
@@ -33,8 +34,9 @@ export default function MovieSearchPage({
 
   useEffect(() => {
     const fetchMovie = async () => {
-      const { searchValue } = await params;
-      setSearchValue(searchValue);
+      // const { searchValue } = await params;
+      const getSearchValue = searchParams.get("searchValue");
+      setSearchValue(getSearchValue);
 
       const data = await fetchData(
         `/search/movie?query=${searchValue}&language=en-US&page=${page}`
@@ -43,7 +45,7 @@ export default function MovieSearchPage({
       setFilteredMovies(data || { results: [] });
     };
     fetchMovie();
-  }, [params, page]);
+  }, [searchValue, page]);
 
   useEffect(() => {
     if (filterGenres.length > 0) {
@@ -66,6 +68,8 @@ export default function MovieSearchPage({
   if (!filteredMovies) {
     return null;
   }
+
+  console.log(searchValue);
 
   return (
     <div className="flex max-w-[1280px] w-full justify-center flex-col gap-8 m-auto">

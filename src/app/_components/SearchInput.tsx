@@ -89,7 +89,7 @@ const SearchInput = () => {
             </div>
           ))}
           <Link
-            href={`/movies/searchValue/${searchValue}`}
+            href={`/movies/search?searchValue=${searchValue}`}
             onClick={() => clickHandler()}
           >
             <div>See all results for "{searchValue}"</div>
