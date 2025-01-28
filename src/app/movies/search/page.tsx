@@ -1,5 +1,4 @@
 "use client";
-import MovieDetailContent from "@/app/_components/movieDetails/MovieDetailContent";
 import { MovieGenerator } from "@/app/_components/MovieGenerator";
 import MoviePagination from "@/app/_components/MoviePagination";
 import { fetchData } from "@/util/fetchData";
@@ -13,8 +12,8 @@ export default function MovieSearchPage() {
   const searchParams = useSearchParams();
 
   const [searchValue, setSearchValue] = useState("");
-  const [movies, setMovies] = useState<any>([]);
-  const [filteredMovies, setFilteredMovies] = useState<any>({ results: [] });
+  const [movies, setMovies] = useState([]);
+  const [filteredMovies, setFilteredMovies] = useState({ results: [] });
   const [genres, setGenres] = useState<GenreType[]>([]);
   const [filterGenres, SetFilterGenres] = useState<string[]>([]);
 
@@ -71,6 +70,8 @@ export default function MovieSearchPage() {
   if (!filteredMovies) {
     return null;
   }
+
+  console.log(movies);
 
   return (
     <div className="flex max-w-[1280px] w-full justify-center flex-col gap-8 m-auto">

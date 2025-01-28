@@ -2,7 +2,6 @@ import PopularMovies from "@/app/_components/PopularMovies";
 import UpcomingMovies from "./_components/UpcomingMovies";
 import TopRatedMovies from "./_components/TopRatedMovies";
 import NowPlayingMovies from "./_components/NowPlayingMovies";
-import { Header } from "./_components/Header";
 
 export default async function Home() {
   return (
@@ -18,8 +17,3 @@ export default async function Home() {
     </div>
   );
 }
-
-// padding-top: 50px;
-//   padding-left: 80px;
-//   padding-right: 80px;
-//   max-width: 1438px;

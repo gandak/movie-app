@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 
 export default function TopRatedMoviesPage() {
   const searchParams = useSearchParams();
-  const [movies, setMovies] = useState<any>(null);
+  const [movies, setMovies] = useState(null);
 
   const page = parseInt(searchParams.get("page") || "1", 10);
 
@@ -33,11 +33,12 @@ export default function TopRatedMoviesPage() {
         <div className="flex flex-wrap gap-8 w-full">
           {movies?.results.map((movie: MovieType, index: number) => {
             return (
-              <MovieGenerator
-                movieInfo={movie}
-                index={index}
-                className="w-[230px] h-[439px]"
-              />
+              <div key={index}>
+                <MovieGenerator
+                  movieInfo={movie}
+                  className="w-[230px] h-[439px]"
+                />
+              </div>
             );
           })}
         </div>

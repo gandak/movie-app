@@ -19,11 +19,12 @@ export default async function TopRatedMovies() {
       <div className="flex flex-wrap gap-8 justify-center">
         {data.results?.slice(0, 10).map((movie: MovieType, index: number) => {
           return (
-            <MovieGenerator
-              index={index}
-              movieInfo={movie}
-              className="w-[230px] h-[439px]"
-            />
+            <div key={index}>
+              <MovieGenerator
+                movieInfo={movie}
+                className="w-[230px] h-[439px]"
+              />
+            </div>
           );
         })}
       </div>

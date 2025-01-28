@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 
 export default function UpcomingMoviesPage() {
   const searchParams = useSearchParams();
-  const [movies, setMovies] = useState<any>(null);
+  const [movies, setMovies] = useState(null);
 
   const page = Number(searchParams.get("page") || "1");
 

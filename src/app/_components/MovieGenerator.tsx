@@ -5,11 +5,9 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 
 export const MovieGenerator = ({
-  index,
   movieInfo,
   className,
 }: {
-  index: number;
   movieInfo: MovieType;
   className: string;
 }) => {
@@ -20,7 +18,6 @@ export const MovieGenerator = ({
           ` flex flex-col items-center rounded-lg overflow-hidden bg-[#F4F4F5]`,
           className
         )}
-        key={index}
       >
         <Image
           src={`https://image.tmdb.org/t/p/original/${movieInfo?.poster_path}`}

@@ -69,18 +69,20 @@ export default function GenreDetailContent({
             onValueChange={handleToggleGroupChange}
             className="flex flex-wrap gap-4 justify-start"
           >
-            {genres.map((genre: GenreType) => (
-              <ToggleGroupItem
-                key={genre.id}
-                value={genre.id.toString()}
-                className={`h-[20px] px-[10px] py-[2px] rounded-lg text-xs font-bold border  ${
-                  filterGenres.includes(genre.id.toString())
-                    ? "bg-black text-white"
-                    : ""
-                }`}
-              >
-                {genre.name} <ChevronRight />
-              </ToggleGroupItem>
+            {genres.map((genre: GenreType, index: number) => (
+              <div key={index}>
+                <ToggleGroupItem
+                  key={genre.id}
+                  value={genre.id.toString()}
+                  className={`h-[20px] px-[10px] py-[2px] rounded-lg text-xs font-bold border  ${
+                    filterGenres.includes(genre.id.toString())
+                      ? "bg-black text-white"
+                      : ""
+                  }`}
+                >
+                  {genre.name} <ChevronRight />
+                </ToggleGroupItem>
+              </div>
             ))}
           </ToggleGroup>
         </div>

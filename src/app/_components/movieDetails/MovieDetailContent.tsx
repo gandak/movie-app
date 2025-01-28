@@ -41,7 +41,7 @@ export default async function MovieDetailContent(movieIdParam: MovieId) {
         <div className="">
           <p className="text-[12px] font-semibold">Rating</p>
           <div className="flex">
-            <img src="/star2.svg" alt="" />
+            <Image src="/star2.svg" alt="" width={26} height={26} />
             <div>
               <div className="flex items-center">
                 <p className="text-[18px] font-semibold">
@@ -77,9 +77,12 @@ export default async function MovieDetailContent(movieIdParam: MovieId) {
         </div>
         <div className="pt-6 flex flex-col gap-6">
           <div className="flex gap-4">
-            {selectedMovie.genres.map((genre: GenreType) => {
+            {selectedMovie.genres.map((genre: GenreType, index: number) => {
               return (
-                <p className="border px-2  rounded-lg text-xs font-semibold">
+                <p
+                  className="border px-2  rounded-lg text-xs font-semibold"
+                  key={index}
+                >
                   {genre.name}
                 </p>
               );
