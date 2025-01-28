@@ -102,8 +102,8 @@ export default async function MovieDetailContent(movieIdParam: MovieId) {
                     array.known_for_department === "Directing"
                 )
                 ?.map((crew: CrewType, index: number) => {
-                  if (index == 0) return <p>{crew.name}</p>;
-                  else return <p>{crew.name}</p>;
+                  if (index == 0) return <p key={index}>{crew.name}</p>;
+                  else return <p key={index}>{crew.name}</p>;
                 })
                 .slice(0, 3)}
             </div>
@@ -121,8 +121,8 @@ export default async function MovieDetailContent(movieIdParam: MovieId) {
                   (array: CrewType) => array.known_for_department === "Writing"
                 )
                 ?.map((crew: CrewType, index: number) => {
-                  if (index == 0) return <p>{crew.name}</p>;
-                  else return <p>{crew.name}</p>;
+                  if (index == 0) return <p key={index}>{crew.name}</p>;
+                  else return <p key={index}>{crew.name}</p>;
                 })
                 .slice(0, 3)}
             </div>
