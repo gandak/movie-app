@@ -52,3 +52,5 @@ export type CrewType = {
 export type MovieId = {
   id: string;
 };
+
+export type Movie = {};

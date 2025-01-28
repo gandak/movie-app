@@ -1,6 +1,5 @@
 import { MovieType } from "@/util/types";
 import { fetchData } from "@/util/fetchData";
-import { fetchTrailer } from "@/util/fetchTrailer";
 import {
   Carousel,
   CarouselContent,
@@ -9,17 +8,9 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogFooter,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Play } from "lucide-react";
+
 import { TrailerButton } from "./TrailerButton";
+import Image from "next/image";
 
 export default async function NowPlayingMovies() {
   const nowPlaying = "/movie/now_playing?language=en-US&page=1";
@@ -41,17 +32,12 @@ export default async function NowPlayingMovies() {
                 }}
               >
                 <Card className="relative ">
-                  {/* <CardContent className=" h-[600px] flex items-center justify-center p-6"> */}
                   <div className="absolute flex flex-col w-[404px] gap-4 text-white left-[150px] top-[180px]">
                     <div>
                       <p className="text-4">Now Playing:</p>
                       <h1 className="text-[30px] font-bold">{movie.title}</h1>
                       <div className="flex items-center">
-                        <img
-                          src="/star.svg"
-                          alt=""
-                          className="w-[28px] h-[28px]"
-                        />
+                        <Image src="/star.svg" alt="" width={28} height={28} />
 
                         <div className="flex items-center">
                           <p className="text-[18px] font-semibold">
@@ -69,7 +55,6 @@ export default async function NowPlayingMovies() {
                       <TrailerButton id={movie.id} />
                     </div>
                   </div>
-                  {/* </CardContent> */}
                 </Card>
               </div>
             </CarouselItem>

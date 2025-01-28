@@ -31,15 +31,17 @@ export async function Genres() {
           {genres.genres.map((genre: GenreType, index: number) => {
             const movieGenres = genre.id;
             return (
-              <Link href={`/movies/genres/${JSON.stringify(movieGenres)}`}>
-                <Button
-                  variant="outline"
-                  className="h-[20px] pl-[10px]  py-[2px] pr-[4px] rounded-lg"
-                >
-                  <p className="text-xs font-bold ">{genre.name}</p>
-                  <ChevronRight />
-                </Button>
-              </Link>
+              <div key={index}>
+                <Link href={`/movies/genres/${JSON.stringify(movieGenres)}`}>
+                  <Button
+                    variant="outline"
+                    className="h-[20px] pl-[10px]  py-[2px] pr-[4px] rounded-lg"
+                  >
+                    <p className="text-xs font-bold ">{genre.name}</p>
+                    <ChevronRight />
+                  </Button>
+                </Link>
+              </div>
             );
           })}
         </div>
