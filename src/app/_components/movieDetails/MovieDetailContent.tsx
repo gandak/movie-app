@@ -166,16 +166,18 @@ export default async function MovieDetailContent(movieIdParam: MovieId) {
         </div>
 
         <div className="flex gap-8 w-full">
-          {moreLikeThis.results.slice(0, 5).map((movie: MovieType) => {
-            return (
-              <div>
-                <MovieGenerator
-                  movieInfo={movie}
-                  className="w-[190px] h-[372px]"
-                />
-              </div>
-            );
-          })}
+          {moreLikeThis.results
+            .slice(0, 5)
+            .map((movie: MovieType, index: number) => {
+              return (
+                <div key={index}>
+                  <MovieGenerator
+                    movieInfo={movie}
+                    className="w-[190px] h-[372px]"
+                  />
+                </div>
+              );
+            })}
         </div>
       </div>
     </div>

@@ -15,7 +15,7 @@ export default function GenreDetailContent({
 }) {
   const searchParams = useSearchParams();
   const [genres, setGenres] = useState<GenreType[]>([]);
-  const [movies, setMovies] = useState<any>(null);
+  const [movies, setMovies] = useState(null);
   const [filterGenres, SetFilterGenres] = useState<string[]>([
     defaultMovieGenres,
   ]);
@@ -93,11 +93,13 @@ export default function GenreDetailContent({
           </h3>
           <div className="grid grid-cols-4 gap-8">
             {movies?.results.map((movie: MovieType, index: number) => (
-              <MovieGenerator
-                index={index}
-                movieInfo={movie}
-                className="w-[165px] h-[331px]"
-              />
+              <div key={index}>
+                <MovieGenerator
+                  index={index}
+                  movieInfo={movie}
+                  className="w-[165px] h-[331px]"
+                />
+              </div>
             ))}
           </div>
           <MoviePagination

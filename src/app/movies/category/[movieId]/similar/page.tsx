@@ -2,7 +2,7 @@
 import { MovieGenerator } from "@/app/_components/MovieGenerator";
 import MoviePagination from "@/app/_components/MoviePagination";
 import { fetchData } from "@/util/fetchData";
-import { Movie, MovieType } from "@/util/types";
+import { MovieType } from "@/util/types";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
