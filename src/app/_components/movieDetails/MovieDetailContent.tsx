@@ -137,11 +137,11 @@ export default async function MovieDetailContent(movieIdParam: MovieId) {
             <div className="flex gap-2">
               {casts.cast
                 ?.map((star: CastType, index: number) => {
-                  if (index == 0) return <p>{star.name}</p>;
+                  if (index == 0) return <p key={index}>{star.name}</p>;
                   else
                     return (
-                      <p className="">
-                        {" · "} {star.name}
+                      <p className="" key={index}>
+                        {star.name}
                       </p>
                     );
                 })
