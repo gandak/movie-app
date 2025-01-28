@@ -19,10 +19,11 @@ export default function MovieSearchPage() {
   const [filterGenres, SetFilterGenres] = useState<string[]>([]);
 
   const page = Number(searchParams.get("page") || "1");
+  const getSearchValue = JSON.stringify(searchParams.get("searchValue"));
 
-  // useEffect(() => {
-  //   setSearchValue(getSearchValue);
-  // }, [getSearchValue]);
+  useEffect(() => {
+    setSearchValue(getSearchValue);
+  }, [getSearchValue]);
 
   useEffect(() => {
     const getAllGenres = async () => {
@@ -35,8 +36,10 @@ export default function MovieSearchPage() {
   useEffect(() => {
     const fetchMovie = async () => {
       // const { searchValue } = await params;
-      const getSearchValue = searchParams.get("searchValue");
-      setSearchValue(getSearchValue);
+      const getFirstSearchValue = JSON.stringify(
+        searchParams.get("searchValue")
+      );
+      setSearchValue(getFirstSearchValue);
 
       const data = await fetchData(
         `/search/movie?query=${searchValue}&language=en-US&page=${page}`
@@ -69,15 +72,13 @@ export default function MovieSearchPage() {
     return null;
   }
 
-  console.log(searchValue);
-
   return (
     <div className="flex max-w-[1280px] w-full justify-center flex-col gap-8 m-auto">
       <h1 className="text-[30px] font-semibold">Search results</h1>
       <div className="w-full flex">
         <div className="w-[70%] flex flex-col gap-8">
           <h2 className="text-[20px] font-semibold">
-            {filteredMovies?.total_results} results for "{searchValue}"
+            {movies?.total_results} results for "{searchValue}"
           </h2>
           <div className="flex flex-wrap gap-12">
             {filteredMovies.results.map((movie: MovieType, index: number) => {

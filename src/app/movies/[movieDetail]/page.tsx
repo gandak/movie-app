@@ -5,7 +5,6 @@ export default function MovieDetailPage({
 }: {
   params: { movieDetail: string };
 }) {
-  console.log(movieDetail);
   return (
     <div className="flex justify-center">
       <MovieDetailContent id={movieDetail} />

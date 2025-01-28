@@ -25,7 +25,6 @@ export default async function NowPlayingMovies() {
   const nowPlaying = "/movie/now_playing?language=en-US&page=1";
 
   const data = await fetchData(nowPlaying);
-  // console.log(data);
 
   return (
     <Carousel className="w-full h-full">

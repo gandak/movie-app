@@ -47,8 +47,8 @@ const SearchInput = () => {
 
       {searchResults.length > 0 ? (
         <div className="absolute mt-4 z-10 bg-white p-8 flex flex-col gap-[10px] w-[553px] drop-shadow-xl rounded-xl">
-          {searchResults?.slice(0, 5).map((movie: MovieType) => (
-            <div className="flex flex-col gap-3">
+          {searchResults?.slice(0, 5).map((movie: MovieType, index: number) => (
+            <div className="flex flex-col gap-3" key={index}>
               <Link
                 href={`/movies/${movie?.id}`}
                 onClick={() => clickHandler()}

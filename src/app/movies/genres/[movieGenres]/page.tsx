@@ -5,7 +5,5 @@ export default function MovieGenresPage({
 }: {
   params: { movieGenres: string };
 }) {
-  // const { defaultMovieGenres } = use(movieGenres);
-
   return <GenreDetailContent defaultMovieGenres={movieGenres} />;
 }

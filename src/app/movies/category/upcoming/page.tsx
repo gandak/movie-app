@@ -33,11 +33,12 @@ export default function UpcomingMoviesPage() {
         <div className="flex flex-wrap gap-8 w-full">
           {movies?.results.map((movie: MovieType, index: number) => {
             return (
-              <MovieGenerator
-                movieInfo={movie}
-                index={index}
-                className="w-[230px] h-[439px]"
-              />
+              <div key={index}>
+                <MovieGenerator
+                  movieInfo={movie}
+                  className="w-[230px] h-[439px]"
+                />
+              </div>
             );
           })}
         </div>

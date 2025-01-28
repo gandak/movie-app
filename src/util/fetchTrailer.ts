@@ -1,6 +1,6 @@
 import { TOKEN } from "./constants";
 
-export async function fetchTrailer(endpoint: number) {
+export async function fetchTrailer(endpoint: string) {
   const response = await fetch(
     `https://api.themoviedb.org/3/movie/${endpoint}/videos`,
     {
