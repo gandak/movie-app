@@ -10,7 +10,7 @@ export default async function MovieDetailPage({
   const { movieDetail } = await params;
   return (
     <div className="flex justify-center">
-      <MovieDetailContent id={params.movieDetail} />
+      <MovieDetailContent id={movieDetail} />
     </div>
   );
 }
