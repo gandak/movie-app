@@ -1,9 +1,10 @@
 import GenreDetailContent from "@/app/_components/movieDetails/GenreDetailContent";
 
-export default function MovieGenresPage({
-  params: { movieGenres },
+export default async function MovieGenresPage({
+  params,
 }: {
-  params: { movieGenres: string };
+  params: Promise<{ movieGenres: string }>;
 }) {
+  const { movieGenres } = await params;
   return <GenreDetailContent defaultMovieGenres={movieGenres} />;
 }
