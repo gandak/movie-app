@@ -4,7 +4,7 @@ import MoviePagination from "@/app/_components/MoviePagination";
 import { fetchData } from "@/util/fetchData";
 import { GenreType, MovieType } from "@/util/types";
 import { ToggleGroup, ToggleGroupItem } from "@radix-ui/react-toggle-group";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, X } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -123,7 +123,12 @@ export default function MovieSearchPage() {
                       : ""
                   }`}
                 >
-                  {genre.name} <ChevronRight className="w-[16px]" />
+                  {genre.name}{" "}
+                  {filterGenres.includes(genre.id.toString()) ? (
+                    <X className="w-[16px]" />
+                  ) : (
+                    <ChevronRight className="w-[16px]" />
+                  )}
                 </ToggleGroupItem>
               ))}
             </ToggleGroup>

@@ -1,6 +1,6 @@
 "use client";
-import { GenreType, MovieType } from "@/util/types";
-import { ChevronRight } from "lucide-react";
+import { GenreType, Movie, MovieType } from "@/util/types";
+import { ChevronRight, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { fetchData } from "@/util/fetchData";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
@@ -15,7 +15,7 @@ export default function GenreDetailContent({
 }) {
   const searchParams = useSearchParams();
   const [genres, setGenres] = useState<GenreType[]>([]);
-  const [movies, setMovies] = useState(null);
+  const [movies, setMovies] = useState<Movie>();
   const [filterGenres, SetFilterGenres] = useState<string[]>([
     defaultMovieGenres,
   ]);
@@ -75,12 +75,17 @@ export default function GenreDetailContent({
                   key={genre.id}
                   value={genre.id.toString()}
                   className={`h-[20px] px-[10px] py-[2px] rounded-lg text-xs font-bold border  ${
-                    filterGenres.includes(genre.id.toString())
+                    filterGenres?.includes(genre.id.toString())
                       ? "bg-black text-white"
                       : ""
                   }`}
                 >
-                  {genre.name} <ChevronRight />
+                  {genre.name}{" "}
+                  {filterGenres.includes(genre.id.toString()) ? (
+                    <X className="w-[16px]" />
+                  ) : (
+                    <ChevronRight className="w-[16px]" />
+                  )}
                 </ToggleGroupItem>
               </div>
             ))}
@@ -95,7 +100,6 @@ export default function GenreDetailContent({
             {movies?.results.map((movie: MovieType, index: number) => (
               <div key={index}>
                 <MovieGenerator
-                  index={index}
                   movieInfo={movie}
                   className="w-[165px] h-[331px]"
                 />

@@ -66,7 +66,7 @@ const SearchInput = () => {
                       {movie?.original_title}
                     </h2>
                     <div className="flex items-center">
-                      <Image src="/star2.svg" alt="" />
+                      <Image src="/star2.svg" alt="" width={26} height={26} />
                       <div className="flex text-[14px] items-center">
                         <p className="font-semibold">
                           {movie?.vote_average.toFixed(1)}

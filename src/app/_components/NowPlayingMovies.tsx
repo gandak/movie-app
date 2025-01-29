@@ -52,7 +52,7 @@ export default async function NowPlayingMovies() {
                       <p className="text-[12px]">{movie?.overview}</p>
                     </div>
                     <div>
-                      <TrailerButton id={movie.id} />
+                      <TrailerButton id={movie.id.toString()} />
                     </div>
                   </div>
                 </Card>

@@ -34,7 +34,6 @@ export default function MoviePagination({
             />
           </PaginationItem>
         )}
-
         {currentPage > 1 && (
           <PaginationItem>
             <PaginationLink href="#" onClick={() => goToPage(currentPage - 1)}>

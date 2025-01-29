@@ -11,8 +11,8 @@ import { Play } from "lucide-react";
 import { fetchTrailer } from "@/util/fetchTrailer";
 import { MovieId } from "@/util/types";
 
-export async function TrailerButton(movieId: MovieId) {
-  const dataTrailer = await fetchTrailer(movieId.id);
+export async function TrailerButton({ id }: { id: string }) {
+  const dataTrailer = await fetchTrailer(id);
   const apiUrl = dataTrailer?.results[0].key;
   const videoTrailerURL = `https://www.youtube.com/embed/${apiUrl}`;
 

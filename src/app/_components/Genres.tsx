@@ -36,6 +36,7 @@ export async function Genres() {
                   <Button
                     variant="outline"
                     className="h-[20px] pl-[10px]  py-[2px] pr-[4px] rounded-lg"
+                    // onClick={}
                   >
                     <p className="text-xs font-bold ">{genre.name}</p>
                     <ChevronRight />
