@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 export default function SimilarMoviesPage({
   params,
 }: {
-  params: { movieId: string };
+  params: Promise<{ movieId: string }>;
 }) {
   const searchParams = useSearchParams();
   const [movies, setMovies] = useState(null);
