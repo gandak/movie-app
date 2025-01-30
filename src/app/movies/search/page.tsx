@@ -14,17 +14,12 @@ export default function MovieSearchPage() {
   const router = useRouter();
 
   const page = Number(searchParams.get("page") || "1");
-  const getSearchValue = searchParams.get("searchValue");
+  const getSearchValue = searchParams.get("searchValue") || "";
 
-  const [searchValue, setSearchValue] = useState("");
-  const [movies, setMovies] = useState<Movie>();
-  const [filteredMovies, setFilteredMovies] = useState<Movie>();
+  const [movies, setMovies] = useState<Movie | null>(null);
+  const [filteredMovies, setFilteredMovies] = useState<Movie | null>(null);
   const [genres, setGenres] = useState<GenreType[]>([]);
-  const [filterGenres, SetFilterGenres] = useState<string[]>([]);
-
-  useEffect(() => {
-    setSearchValue(getSearchValue || "");
-  }, [getSearchValue]);
+  const [filterGenres, setFilterGenres] = useState<string[]>([]);
 
   useEffect(() => {
     const getAllGenres = async () => {
@@ -36,47 +31,35 @@ export default function MovieSearchPage() {
 
   useEffect(() => {
     const fetchMovie = async () => {
-      const getFirstSearchValue = JSON.stringify(
-        searchParams.get("searchValue")
-      );
-
-      setSearchValue(getFirstSearchValue);
-
       const data = await fetchData(
-        `/search/movie?query=${searchValue}&language=en-US&page=${page}`
+        `/search/movie?query=${getSearchValue}&language=en-US&page=${page}`
       );
-
       setMovies(data);
+      setFilteredMovies(data);
     };
     fetchMovie();
-  }, [searchValue, page]);
+  }, [getSearchValue, page]);
 
   const handleToggleGroupChange = (selectedGenres: string[]) => {
-    SetFilterGenres(selectedGenres);
+    setFilterGenres(selectedGenres);
     router.push(
-      `/movies/search/?searchValue=${getSearchValue}&genreIds=${selectedGenres.join(
-        ","
-      )}`
+      `/movies/search/?searchValue=${getSearchValue}&genreIds=${selectedGenres}`
     );
   };
 
   useEffect(() => {
-    if (filterGenres && filterGenres.length > 0) {
-      const genreFilteredMovies = movies?.results.filter((movie: MovieType) => {
-        return filterGenres.some((id) =>
-          movie.genre_ids.includes(Number(id) as never)
-        );
-      });
+    if (filterGenres.length > 0 && movies) {
+      const genreFilteredMovies = movies.results.filter((movie: MovieType) =>
+        filterGenres.some((id) => movie.genre_ids.includes(Number(id) as never))
+      );
 
-      setFilteredMovies(genreFilteredMovies as never);
+      setFilteredMovies({ ...movies, results: genreFilteredMovies });
     } else {
       setFilteredMovies(movies);
     }
   }, [filterGenres, movies]);
 
-  if (!movies) {
-    return null;
-  }
+  if (!movies) return <p className="text-center text-gray-500">Loading...</p>;
 
   return (
     <div className="flex max-w-[1280px] w-full justify-center flex-col gap-8 m-auto">
@@ -84,23 +67,24 @@ export default function MovieSearchPage() {
       <div className="w-full flex">
         <div className="w-[70%] flex flex-col gap-8">
           <h2 className="text-[20px] font-semibold">
-            {movies?.total_results} results for {searchValue}
+            {movies?.total_results} results for {getSearchValue}
           </h2>
           <div className="flex flex-wrap gap-12">
-            {filteredMovies?.results.map((movie: MovieType, index: number) => {
-              return (
-                <div key={index}>
-                  <MovieGenerator
-                    movieInfo={movie}
-                    className="w-[165px] h-[331px]"
-                  />
-                </div>
-              );
-            })}
+            {filteredMovies?.results?.length ? (
+              filteredMovies.results.map((movie: MovieType, index: number) => (
+                <MovieGenerator
+                  key={index}
+                  movieInfo={movie}
+                  className="w-[165px] h-[331px]"
+                />
+              ))
+            ) : (
+              <p className="text-gray-500">No movies found.</p>
+            )}
           </div>
           <div>
             <MoviePagination
-              currentPage={Number(page)}
+              currentPage={page}
               totalPages={movies.total_pages || 1}
             />
           </div>
@@ -108,28 +92,26 @@ export default function MovieSearchPage() {
 
         <div className="w-[30%]">
           <div className="flex flex-col gap-4 w-full">
-            <div>
-              <h2 className="text-[24px] font-semibold">Genres</h2>
-              <p>See lists of movies by genre</p>
-            </div>
+            <h2 className="text-[24px] font-semibold">Genres</h2>
+            <p>See lists of movies by genre</p>
             <ToggleGroup
               type="multiple"
               value={filterGenres}
               onValueChange={handleToggleGroupChange}
               className="flex flex-wrap gap-4 justify-start"
             >
-              {genres.map((genre: GenreType) => (
+              {genres.map((genre) => (
                 <ToggleGroupItem
                   key={genre.id}
                   value={genre.id.toString()}
                   className={`h-[20px] px-[10px] py-[2px] rounded-lg text-xs font-bold border flex items-center ${
-                    filterGenres?.includes(genre.id.toString())
+                    filterGenres.includes(genre.id.toString())
                       ? "bg-black text-white"
                       : ""
                   }`}
                 >
                   {genre.name}{" "}
-                  {filterGenres?.includes(genre.id.toString()) ? (
+                  {filterGenres.includes(genre.id.toString()) ? (
                     <X className="w-[16px]" />
                   ) : (
                     <ChevronRight className="w-[16px]" />

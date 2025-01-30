@@ -9,8 +9,12 @@ import { useEffect, useState } from "react";
 export default function TopRatedMoviesPage() {
   const searchParams = useSearchParams();
   const [movies, setMovies] = useState<Movie>();
+  const [page, setPage] = useState(1);
 
-  const page = parseInt(searchParams.get("page") || "1", 10);
+  useEffect(() => {
+    const pageParam = parseInt(searchParams.get("page") || "1", 10);
+    setPage(pageParam);
+  }, [searchParams]);
 
   useEffect(() => {
     const fetchMovies = async () => {
