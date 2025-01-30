@@ -5,7 +5,7 @@ import { fetchData } from "@/util/fetchData";
 import { GenreType, Movie, MovieType } from "@/util/types";
 import { ToggleGroup, ToggleGroupItem } from "@radix-ui/react-toggle-group";
 import { ChevronRight, X } from "lucide-react";
-import { usePathname, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -18,12 +18,12 @@ export default function MovieSearchPage() {
 
   const [searchValue, setSearchValue] = useState("");
   const [movies, setMovies] = useState<Movie>();
-  // const [filteredMovies, setFilteredMovies] = useState({ results: [] });
+  const [filteredMovies, setFilteredMovies] = useState<Movie>();
   const [genres, setGenres] = useState<GenreType[]>([]);
-  const [filterGenres, SetFilterGenres] = useState<string[]>();
+  const [filterGenres, SetFilterGenres] = useState<string[]>([]);
 
   useEffect(() => {
-    setSearchValue(JSON.stringify(getSearchValue));
+    setSearchValue(getSearchValue || "");
   }, [getSearchValue]);
 
   useEffect(() => {
@@ -45,32 +45,32 @@ export default function MovieSearchPage() {
       const data = await fetchData(
         `/search/movie?query=${searchValue}&language=en-US&page=${page}`
       );
+
       setMovies(data);
-      // setFilteredMovies(data || { results: [] });
     };
     fetchMovie();
   }, [searchValue, page]);
 
   const handleToggleGroupChange = (selectedGenres: string[]) => {
-    router.push(
-      `/movies/search/?searchValue=${getSearchValue}&genreIds=${selectedGenres}`
-    );
     SetFilterGenres(selectedGenres);
+    router.push(
+      `/movies/search/?searchValue=${getSearchValue}&genreIds=${selectedGenres.join(
+        ","
+      )}`
+    );
   };
 
   useEffect(() => {
-    if (filterGenres) {
+    if (filterGenres && filterGenres.length > 0) {
       const genreFilteredMovies = movies?.results.filter((movie: MovieType) => {
         return filterGenres.some((id) =>
           movie.genre_ids.includes(Number(id) as never)
         );
       });
 
-      console.log("filter Genres: ", filterGenres);
-      console.log("Filtered movies: ", genreFilteredMovies);
-      // setMovies(genreFilteredMovies);
+      setFilteredMovies({ ...movies, results: genreFilteredMovies || [] });
     } else {
-      // setFilteredMovies({ results: movies });
+      setFilteredMovies(movies);
     }
   }, [filterGenres, movies]);
 
@@ -87,7 +87,7 @@ export default function MovieSearchPage() {
             {movies?.total_results} results for {searchValue}
           </h2>
           <div className="flex flex-wrap gap-12">
-            {movies?.results.map((movie: MovieType, index: number) => {
+            {filteredMovies?.results.map((movie: MovieType, index: number) => {
               return (
                 <div key={index}>
                   <MovieGenerator
