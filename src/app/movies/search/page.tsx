@@ -68,7 +68,7 @@ export default function MovieSearchPage() {
         );
       });
 
-      setFilteredMovies({ ...movies, results: genreFilteredMovies || [] });
+      setFilteredMovies(genreFilteredMovies as never);
     } else {
       setFilteredMovies(movies);
     }
