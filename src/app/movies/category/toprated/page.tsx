@@ -2,13 +2,13 @@
 import { MovieGenerator } from "@/app/_components/MovieGenerator";
 import MoviePagination from "@/app/_components/MoviePagination";
 import { fetchData } from "@/util/fetchData";
-import { MovieType } from "@/util/types";
+import { Movie, MovieType } from "@/util/types";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function TopRatedMoviesPage() {
   const searchParams = useSearchParams();
-  const [movies, setMovies] = useState(null);
+  const [movies, setMovies] = useState<Movie>();
 
   const page = parseInt(searchParams.get("page") || "1", 10);
 

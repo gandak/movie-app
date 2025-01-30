@@ -9,7 +9,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Play } from "lucide-react";
 import { fetchTrailer } from "@/util/fetchTrailer";
-import { MovieId } from "@/util/types";
 
 export async function TrailerButton({ id }: { id: string }) {
   const dataTrailer = await fetchTrailer(id);

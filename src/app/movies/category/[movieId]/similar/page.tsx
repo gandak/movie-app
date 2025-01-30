@@ -2,7 +2,7 @@
 import { MovieGenerator } from "@/app/_components/MovieGenerator";
 import MoviePagination from "@/app/_components/MoviePagination";
 import { fetchData } from "@/util/fetchData";
-import { MovieType } from "@/util/types";
+import { Movie, MovieType } from "@/util/types";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -12,7 +12,7 @@ export default function SimilarMoviesPage({
   params: Promise<{ movieId: string }>;
 }) {
   const searchParams = useSearchParams();
-  const [movies, setMovies] = useState(null);
+  const [movies, setMovies] = useState<Movie>();
 
   const page = Number(searchParams.get("page") || "1");
 
@@ -30,6 +30,8 @@ export default function SimilarMoviesPage({
   if (!movies) {
     return null;
   }
+
+  console.log(movies);
 
   return (
     <div className="max-w-[1280px] w-full flex flex-col items-end m-auto gap-8">

@@ -2,26 +2,28 @@
 import { MovieGenerator } from "@/app/_components/MovieGenerator";
 import MoviePagination from "@/app/_components/MoviePagination";
 import { fetchData } from "@/util/fetchData";
-import { GenreType, MovieType } from "@/util/types";
+import { GenreType, Movie, MovieType } from "@/util/types";
 import { ToggleGroup, ToggleGroupItem } from "@radix-ui/react-toggle-group";
 import { ChevronRight, X } from "lucide-react";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function MovieSearchPage() {
   const searchParams = useSearchParams();
-
-  const [searchValue, setSearchValue] = useState("");
-  const [movies, setMovies] = useState([]);
-  const [filteredMovies, setFilteredMovies] = useState({ results: [] });
-  const [genres, setGenres] = useState<GenreType[]>([]);
-  const [filterGenres, SetFilterGenres] = useState<string[]>([]);
+  const router = useRouter();
 
   const page = Number(searchParams.get("page") || "1");
-  const getSearchValue = JSON.stringify(searchParams.get("searchValue"));
+  const getSearchValue = searchParams.get("searchValue");
+
+  const [searchValue, setSearchValue] = useState("");
+  const [movies, setMovies] = useState<Movie>();
+  // const [filteredMovies, setFilteredMovies] = useState({ results: [] });
+  const [genres, setGenres] = useState<GenreType[]>([]);
+  const [filterGenres, SetFilterGenres] = useState<string[]>();
 
   useEffect(() => {
-    setSearchValue(getSearchValue);
+    setSearchValue(JSON.stringify(getSearchValue));
   }, [getSearchValue]);
 
   useEffect(() => {
@@ -34,44 +36,47 @@ export default function MovieSearchPage() {
 
   useEffect(() => {
     const fetchMovie = async () => {
-      // const { searchValue } = await params;
       const getFirstSearchValue = JSON.stringify(
         searchParams.get("searchValue")
       );
+
       setSearchValue(getFirstSearchValue);
 
       const data = await fetchData(
         `/search/movie?query=${searchValue}&language=en-US&page=${page}`
       );
-      setMovies(data.results || []);
-      setFilteredMovies(data || { results: [] });
+      setMovies(data);
+      // setFilteredMovies(data || { results: [] });
     };
     fetchMovie();
   }, [searchValue, page]);
 
-  useEffect(() => {
-    if (filterGenres.length > 0) {
-      const genreFilteredMovies = movies.filter((movie: MovieType) =>
-        filterGenres.some((genreId) =>
-          movie.genre_ids.includes(Number(genreId))
-        )
-      );
-
-      setFilteredMovies({ results: genreFilteredMovies });
-    } else {
-      setFilteredMovies({ results: movies });
-    }
-  }, [filterGenres, movies]);
-
   const handleToggleGroupChange = (selectedGenres: string[]) => {
+    router.push(
+      `/movies/search/?searchValue=${getSearchValue}&genreIds=${selectedGenres}`
+    );
     SetFilterGenres(selectedGenres);
   };
 
-  if (!filteredMovies) {
+  useEffect(() => {
+    if (filterGenres) {
+      const genreFilteredMovies = movies?.results.filter((movie: MovieType) => {
+        return filterGenres.some((id) =>
+          movie.genre_ids.includes(Number(id) as never)
+        );
+      });
+
+      console.log("filter Genres: ", filterGenres);
+      console.log("Filtered movies: ", genreFilteredMovies);
+      // setMovies(genreFilteredMovies);
+    } else {
+      // setFilteredMovies({ results: movies });
+    }
+  }, [filterGenres, movies]);
+
+  if (!movies) {
     return null;
   }
-
-  console.log(movies);
 
   return (
     <div className="flex max-w-[1280px] w-full justify-center flex-col gap-8 m-auto">
@@ -79,24 +84,24 @@ export default function MovieSearchPage() {
       <div className="w-full flex">
         <div className="w-[70%] flex flex-col gap-8">
           <h2 className="text-[20px] font-semibold">
-            {movies?.total_results} results for "{searchValue}"
+            {movies?.total_results} results for {searchValue}
           </h2>
           <div className="flex flex-wrap gap-12">
-            {filteredMovies.results.map((movie: MovieType, index: number) => {
+            {movies?.results.map((movie: MovieType, index: number) => {
               return (
-                <MovieGenerator
-                  key={movie.id}
-                  movieInfo={movie}
-                  index={index}
-                  className="w-[165px] h-[331px]"
-                />
+                <div key={index}>
+                  <MovieGenerator
+                    movieInfo={movie}
+                    className="w-[165px] h-[331px]"
+                  />
+                </div>
               );
             })}
           </div>
           <div>
             <MoviePagination
               currentPage={Number(page)}
-              totalPages={filteredMovies.total_pages || 1}
+              totalPages={movies.total_pages || 1}
             />
           </div>
         </div>
@@ -118,13 +123,13 @@ export default function MovieSearchPage() {
                   key={genre.id}
                   value={genre.id.toString()}
                   className={`h-[20px] px-[10px] py-[2px] rounded-lg text-xs font-bold border flex items-center ${
-                    filterGenres.includes(genre.id.toString())
+                    filterGenres?.includes(genre.id.toString())
                       ? "bg-black text-white"
                       : ""
                   }`}
                 >
                   {genre.name}{" "}
-                  {filterGenres.includes(genre.id.toString()) ? (
+                  {filterGenres?.includes(genre.id.toString()) ? (
                     <X className="w-[16px]" />
                   ) : (
                     <ChevronRight className="w-[16px]" />

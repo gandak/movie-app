@@ -1,10 +1,9 @@
 import MovieDetailContent from "@/app/_components/movieDetails/MovieDetailContent";
-import { MovieId } from "@/util/types";
 
 export default async function MovieDetailPage({
   params,
 }: {
-  params: Promise<{ movieDetail: MovieId }>;
+  params: Promise<{ movieDetail: string }>;
 }) {
   const { movieDetail } = await params;
 

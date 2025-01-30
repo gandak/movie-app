@@ -45,7 +45,7 @@ const SearchInput = () => {
         className="w-full rounded-lg bg-background pl-8"
       />
 
-      {searchResults.length > 0 ? (
+      {searchResults.length ? (
         <div className="absolute mt-4 z-10 bg-white p-8 flex flex-col gap-[10px] w-[553px] drop-shadow-xl rounded-xl">
           {searchResults?.slice(0, 5).map((movie: MovieType, index: number) => (
             <div className="flex flex-col gap-3" key={index}>
