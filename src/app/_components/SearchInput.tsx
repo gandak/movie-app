@@ -31,6 +31,9 @@ const SearchInput = () => {
     setSearchValue("");
   };
 
+  if (!searchResults)
+    return <p className="text-center text-gray-500">Loading...</p>;
+
   return (
     <div className="relative w-[355px]">
       <div className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground">

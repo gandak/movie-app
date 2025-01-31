@@ -55,7 +55,7 @@ export type MovieId = {
 
 export type Movie = {
   page: number;
-  results: [];
+  results: MovieType[];
   total_pages: number;
   total_results: number;
 };

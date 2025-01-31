@@ -16,6 +16,8 @@ export default function MovieSearchPage() {
   const page = Number(searchParams.get("page") || "1");
   const getSearchValue = searchParams.get("searchValue") || "";
 
+  console.log(page);
+
   const [movies, setMovies] = useState<Movie | null>(null);
   const [filteredMovies, setFilteredMovies] = useState<Movie | null>(null);
   const [genres, setGenres] = useState<GenreType[]>([]);
@@ -35,16 +37,19 @@ export default function MovieSearchPage() {
         `/search/movie?query=${getSearchValue}&language=en-US&page=${page}`
       );
       setMovies(data);
-      setFilteredMovies(data);
+      // setFilteredMovies(data);
+      console.log(getSearchValue);
     };
     fetchMovie();
   }, [getSearchValue, page]);
 
   const handleToggleGroupChange = (selectedGenres: string[]) => {
     setFilterGenres(selectedGenres);
-    router.push(
-      `/movies/search/?searchValue=${getSearchValue}&genreIds=${selectedGenres}`
-    );
+    selectedGenres.length > 0
+      ? router.push(
+          `/movies/search/?searchValue=${getSearchValue}&genreIds=${selectedGenres}`
+        )
+      : router.push(`/movies/search/?searchValue=${getSearchValue}`);
   };
 
   useEffect(() => {
